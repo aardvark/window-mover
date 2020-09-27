@@ -8,19 +8,32 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Application:" />
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="appCbx"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Window:" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="selWTbx" />
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="appCbx" DropDownClosed="AppCbx_OnDropDownClosed"/>
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"/>
         <Button Grid.Row="2" Grid.Column="0" x:Name="minBtn" Content="Minimize" Click="MinBtn_OnClick" />
         <Button Grid.Row="2" Grid.Column="1" x:Name="maxBtn" Content="Maximize" Click="MaxBtn_OnClick"/>
+        <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="upBtn" Content="Up" Click="UpBtn_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="leftBtn" Content="Left" Click="LeftBtn_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="rightBtn" Content="Right" Click="RightBtn_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="downBtn" Content="Down" Click="DownBtn_OnClick"/>
+        <Separator Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"/>
+        <TextBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" x:Name="infoTbx"/>
     </Grid>
 </Window>
