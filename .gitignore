@@ -1,5 +1,6 @@
 ﻿obj/
 bin/
+*.sln.DotSettings.user
 
 # Rider workspace config, no sense in sharing this one
 workspace.xml
