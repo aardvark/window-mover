@@ -96,15 +96,15 @@ namespace window_mover
                 return;
             }
 
-            Rect rect = getWSize(hWnd);
-            Rect csize = getCSize(hWnd);
+            Rect windowR = GetWindowRect(hWnd);
 
-            var x = rect.Left + dx;
-            var y = rect.Top;
-            var nWidth = csize.Right;
-            var nHeight = csize.Bottom;
+            var x = windowR.Left + dx;
+            var y = windowR.Top;
 
-            MoveWindowCall(hWnd, x, y, nWidth, nHeight);
+            var cWidth = windowR.Right - windowR.Left;
+            var cHeight = windowR.Bottom - windowR.Top;
+
+            MoveWindow(hWnd, x, y, cWidth, cHeight, true);
         }
 
         private void MoveWindowY(int dy)
@@ -117,15 +117,15 @@ namespace window_mover
                 return;
             }
 
-            Rect rect = getWSize(hWnd);
-            Rect csize = getCSize(hWnd);
+            Rect windowR = GetWindowRect(hWnd);
+            
+            var x = windowR.Left;
+            var y = windowR.Top + dy;
 
-            var x = rect.Left;
-            var y = rect.Top + dy;
-            var nWidth = csize.Right;
-            var nHeight = csize.Bottom;
-
-            MoveWindowCall(hWnd, x, y, nWidth, nHeight);
+            var cWidth = windowR.Right - windowR.Left;
+            var cHeight = windowR.Bottom - windowR.Top;
+            
+            MoveWindow(hWnd, x, y, cWidth, cHeight, true);
         }
 
         private void UpBtn_OnClick(object sender, RoutedEventArgs e)
@@ -149,19 +149,6 @@ namespace window_mover
             MoveWindowX(10);
         }
 
-        /*
-         * Need to add next two to the new window size or it will shrink for some reason
-         * probably something to do with GetClientRect return. It totally return not what
-         * i am expecting
-         */
-        private readonly int move_window_magic_x = 16;
-        private readonly int move_window_magic_y = 59;
-
-        private bool MoveWindowCall(IntPtr hWnd, int x, int y, int nWidth, int nHeight)
-        {
-            return MoveWindow(hWnd, x, y, nWidth + move_window_magic_x, nHeight + move_window_magic_y, true);
-        }
-
         private void AppCbx_OnDropDownClosed(object o, EventArgs e)
         {
             var item = appCbx.SelectedItem;
@@ -172,13 +159,13 @@ namespace window_mover
                 return;
             }
 
-            Rect wsize = getWSize(hWnd);
+            Rect wsize = GetWindowRect(hWnd);
             /*
              * Topleft (2202, 139) , BotRight(2982,618)
              */
             var rect = $"TopLeft:({wsize.Left}, {wsize.Top}) , BotRight:({wsize.Right},{wsize.Bottom})";
 
-            Rect csize = getCSize(hWnd);
+            Rect csize = GetClientRect(hWnd);
             /*
              * Client: 0, 0, 765, 422
              */
@@ -187,7 +174,7 @@ namespace window_mover
         }
 
 
-        private Rect getWSize(IntPtr hWnd)
+        private Rect GetWindowRect(IntPtr hWnd)
         {
             if (!GetWindowRect(hWnd, out Rect rct))
             {
@@ -197,7 +184,7 @@ namespace window_mover
             return rct;
         }
 
-        private Rect getCSize(IntPtr hWnd)
+        private Rect GetClientRect(IntPtr hWnd)
         {
             if (!GetClientRect(hWnd, out Rect rct))
             {
