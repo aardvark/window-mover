@@ -63,40 +63,31 @@ namespace window_mover
 
         private void MinBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            var item = appCbx.SelectedItem;
-            IntPtr hWnd = GetMainWindowHandle(item);
-            if (hWnd == IntPtr.Zero)
-            {
-                return;
-            }
+            if (!(appCbx.SelectedItem is string s)) return;
 
-            ShowWindow(hWnd, 6);
+            var pId = int.Parse(s.Substring(0, s.IndexOf(":", StringComparison.Ordinal)));
+            ShowWindow(Process.GetProcessById(pId).MainWindowHandle, 6);
         }
 
         private void MaxBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            var item = appCbx.SelectedItem;
-            IntPtr hWnd = GetMainWindowHandle(item);
-            if (hWnd == IntPtr.Zero)
-            {
-                return;
-            }
+            if (!(appCbx.SelectedItem is string s)) return;
 
-            ShowWindow(hWnd, 3);
+            var pId = int.Parse(s.Substring(0, s.IndexOf(":", StringComparison.Ordinal)));
+            ShowWindow(Process.GetProcessById(pId).MainWindowHandle, 3);
         }
 
 
         private void MoveWindowX(int dx)
         {
-            var item = appCbx.SelectedItem;
+            if (!(appCbx.SelectedItem is string s)) return;
 
-            IntPtr hWnd = GetMainWindowHandle(item);
-            if (hWnd == IntPtr.Zero)
-            {
-                return;
-            }
+            var pId = int.Parse(s.Substring(0, s.IndexOf(":", StringComparison.Ordinal)));
+            IntPtr hWnd = Process.GetProcessById(pId).MainWindowHandle;
 
-            Rect windowR = GetWindowRect(hWnd);
+            if (hWnd == IntPtr.Zero) return;
+
+            var windowR = GetWindowRect(hWnd);
 
             var x = windowR.Left + dx;
             var y = windowR.Top;
@@ -118,13 +109,13 @@ namespace window_mover
             }
 
             Rect windowR = GetWindowRect(hWnd);
-            
+
             var x = windowR.Left;
             var y = windowR.Top + dy;
 
             var cWidth = windowR.Right - windowR.Left;
             var cHeight = windowR.Bottom - windowR.Top;
-            
+
             MoveWindow(hWnd, x, y, cWidth, cHeight, true);
         }
 
