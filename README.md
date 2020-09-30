@@ -16,6 +16,9 @@ combination of user32.dll calls `GetClientRect`, `GetWindowRect` and `MoveWindow
 
 ![Moving empty notepad window using binary](doc/it-is-alive.gif)
 
+As per 120e891c information about monitor size is collected and applications can 
+be moved and resized based on screen size. 
+ 
 # Build
 
 TODO: this doesn't have any build currently it build by 
