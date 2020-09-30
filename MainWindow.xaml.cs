@@ -184,5 +184,145 @@ namespace window_mover
 
             return rct;
         }
+
+        /* Move to the corner button hadnlers*/
+        private void cornUlBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            /* To move window to the upper left corner and take 1/4 of the screen*/
+            var item = appCbx.SelectedItem;
+
+            IntPtr hWnd = GetMainWindowHandle(item);
+            if (hWnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            Rect windowR = GetWindowRect(hWnd);
+            var info = GetMonitorSize(windowR);
+
+            var cWidth = info.rcWork.Right / 2;
+            var cHeight = info.rcWork.Bottom / 2;
+
+            /*Upper left of the screen is always 0,0*/
+            MoveWindow(hWnd, 0, 0, cWidth, cHeight, true);
+        }
+
+        private static MONITORINFOEX GetMonitorSize(Rect windowR)
+        {
+            /*1. Get a full screen size*/
+            /*
+             * Size of the primary monitor: GetSystemMetrics SM_CXSCREEN / SM_CYSCREEN
+             *                              GetDeviceCaps can also be used
+             * Size of all monitors (combined): GetSystemMetrics SM_CX/YVIRTUALSCREEN
+             * Size of work area (screen excluding taskbar and other docked bars) on primary monitor: SystemParametersInfo SPI_GETWORKAREA
+             * Size of a specific monitor (work area and "screen"): GetMonitorInfo
+             */
+            var monitorPoint = new POINTSTRUCT(windowR.Left, windowR.Top);
+            int MONITOR_DEFAULT_TO_PRIMARY = 1;
+            IntPtr ptr = MonitorFromPoint(monitorPoint, MONITOR_DEFAULT_TO_PRIMARY);
+            MONITORINFOEX info = new MONITORINFOEX();
+            GetMonitorInfo(ptr, info);
+            return info;
+        }
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern bool GetMonitorInfo(IntPtr hmonitor, [In, Out] MONITORINFOEX info);
+
+        [DllImport("User32.dll", ExactSpelling = true)]
+        public static extern IntPtr MonitorFromPoint(POINTSTRUCT pt, int flags);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+        public class MONITORINFOEX
+        {
+            public int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
+            public Rect rcMonitor = new Rect();
+            public Rect rcWork = new Rect();
+            public int dwFlags = 0;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            public char[] szDevice = new char[32];
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINTSTRUCT
+        {
+            public int x;
+            public int y;
+
+            public POINTSTRUCT(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        private void cornUrBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            /* To move window to the upper right corner and take 1/4 of the screen*/
+            var item = appCbx.SelectedItem;
+
+            IntPtr hWnd = GetMainWindowHandle(item);
+            if (hWnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            Rect windowR = GetWindowRect(hWnd);
+            var info = GetMonitorSize(windowR);
+
+            var x = info.rcWork.Right / 2;
+            var y = 0;
+
+            var cWidth = info.rcWork.Right / 2;
+            var cHeight = info.rcWork.Bottom / 2;
+
+            MoveWindow(hWnd, x, y, cWidth, cHeight, true);
+        }
+
+        private void cornDlBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            /* To move window to the lower left corner and take 1/4 of the screen*/
+            var item = appCbx.SelectedItem;
+
+            IntPtr hWnd = GetMainWindowHandle(item);
+            if (hWnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            Rect windowR = GetWindowRect(hWnd);
+            var info = GetMonitorSize(windowR);
+
+            var x = 0;
+            var y = info.rcWork.Bottom / 2;
+
+            var cWidth = info.rcWork.Right / 2;
+            var cHeight = info.rcWork.Bottom / 2;
+
+            MoveWindow(hWnd, x, y, cWidth, cHeight, true);
+        }
+
+        private void cornDrBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            /* To move window to the lower right corner and take 1/4 of the screen*/
+            var item = appCbx.SelectedItem;
+
+            IntPtr hWnd = GetMainWindowHandle(item);
+            if (hWnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            Rect windowR = GetWindowRect(hWnd);
+            var info = GetMonitorSize(windowR);
+
+            var x = info.rcWork.Right / 2;
+            var y = info.rcWork.Bottom / 2;
+
+            var cWidth = info.rcWork.Right / 2;
+            var cHeight = info.rcWork.Bottom / 2;
+
+            MoveWindow(hWnd, x, y, cWidth, cHeight, true);
+        }
     }
 }

@@ -21,6 +21,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Application:" />
@@ -34,6 +37,12 @@
         <Button Grid.Row="5" Grid.Column="2" x:Name="rightBtn" Content="Right" Click="RightBtn_OnClick"/>
         <Button Grid.Row="6" Grid.Column="1" x:Name="downBtn" Content="Down" Click="DownBtn_OnClick"/>
         <Separator Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"/>
-        <TextBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" x:Name="infoTbx"/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="cornUlBtn" Content="Up Left" Click="cornUlBtn_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="cornUrBtn" Content="Up Right" Click="cornUrBtn_OnClick"/>
+        <Button Grid.Row="9" Grid.Column="0" x:Name="cornDlBtn" Content="Down Left" Click="cornDlBtn_OnClick"/>
+        <Button Grid.Row="9" Grid.Column="1" x:Name="cornDrBtn" Content="Down Right" Click="cornDrBtn_OnClick"/>
+        
+        <Separator Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"/>
+        <TextBox Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" x:Name="infoTbx"/>
     </Grid>
 </Window>
